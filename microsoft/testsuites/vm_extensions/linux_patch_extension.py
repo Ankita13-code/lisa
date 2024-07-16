@@ -128,6 +128,7 @@ def _is_supported_linux_distro(node: Node) -> bool:
 )
 class LinuxPatchExtensionBVT(TestSuite):
     TIMEOUT = 14400  # 4H Max install operation duration
+    TEST_TIMEOUT = 18000 # Increase the timeout to give more time for reboot
 
     @TestCaseMetadata(
         description="""
@@ -176,7 +177,7 @@ class LinuxPatchExtensionBVT(TestSuite):
         Verify status file response for validity.
         """,
         priority=3,
-        timeout=TIMEOUT,
+        timeout=TEST_TIMEOUT,
     )
     def verify_vm_install_patches(
         self, node: Node, environment: Environment, log: Logger
@@ -194,6 +195,7 @@ class LinuxPatchExtensionBVT(TestSuite):
         # verify vm agent service is running, lpe is a dependent of vm agent
         # service
         _verify_vm_agent_running(node, log)
+        log.debug(f"The VM agent is running successfully")
 
         try:
             operation = compute_client.virtual_machines.begin_install_patches(
@@ -203,7 +205,7 @@ class LinuxPatchExtensionBVT(TestSuite):
             )
             # set wait operation max duration 4H timeout, status file should be
             # generated before timeout
-            install_result = wait_operation(operation, self.TIMEOUT)
+            install_result = wait_operation(operation, self.TEST_TIMEOUT)
 
         except HttpResponseError as identifier:
             if any(
