@@ -13,7 +13,6 @@ from .gcc import Gcc
 from .git import Git
 from .make import Make
 from .texinfo import Texinfo
-from .perl_cpan import Perl_CPAN
 
 
 class Netperf(Tool):
