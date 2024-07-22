@@ -219,7 +219,7 @@ def perf_tcp_pps(
     server.execute("dnf install perl-CPAN", sudo=True)
     client.execute("dnf install perl-CPAN", sudo=True)
     client_netperf, server_netperf = run_in_parallel(
-            [lambda: client.tools[Netperf], lambda: server.tools[Netperf]]  # type: ignore
+        [lambda: client.tools[Netperf], lambda: server.tools[Netperf]]  # type: ignore
     )
 
     cpu = client.tools[Lscpu]
