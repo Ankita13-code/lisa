@@ -545,6 +545,7 @@ class Xfstesting(TestSuite):
 
     def _install_xfstests(self, node: Node) -> Xfstests:
         try:
+            node.execute("dnf install perl-CPAN", sudo=True)
             xfstests = node.tools[Xfstests]
             return xfstests
         except UnsupportedDistroException as identifier:

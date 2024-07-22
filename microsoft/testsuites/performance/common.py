@@ -215,9 +215,11 @@ def perf_tcp_pps(
         # set server and client from environment, if not set explicitly
         server = cast(RemoteNode, environment.nodes[1])
         client = cast(RemoteNode, environment.nodes[0])
-
+        
+    server.execute("dnf install perl-CPAN", sudo=True)
+    client.execute("dnf install perl-CPAN", sudo=True)
     client_netperf, server_netperf = run_in_parallel(
-        [lambda: client.tools[Netperf], lambda: server.tools[Netperf]]  # type: ignore
+            [lambda: client.tools[Netperf], lambda: server.tools[Netperf]]  # type: ignore
     )
 
     cpu = client.tools[Lscpu]

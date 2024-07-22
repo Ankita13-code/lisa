@@ -30,7 +30,7 @@ class Netperf(Tool):
 
     @property
     def dependencies(self) -> List[Type[Tool]]:
-        return [Gcc, Git, Make, Texinfo, Perl_CPAN]
+        return [Gcc, Git, Make, Texinfo]
 
     def run_as_server(self, port: int = 30000, daemon: bool = True) -> None:
         cmd = f"netserver -p {port} "
